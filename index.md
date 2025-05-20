@@ -9,8 +9,7 @@ layout: homepage
 I am currently a 3rd-year (Junior) Undergraduate student at [Xinjiang University](https://www.xju.edu.cn/), working under the mentorship of Dr. [Zhongyu Li](https://gr.xjtu.edu.cn/en/web/zhongyuli). My research involves medical image analysis, particularly in annotation-efficient learning and segmentation foundation model.
 ## Research Interest:
 - **Medical Image Analysis:**  image segmentation, foundation model
-- **Machine Learning:**  weakly-supervised learning
-- **Computational Neuroscience:**  Whole brain segmentation of neurons, projection and reconstruction of neural circuits
+- **Artificial Intelligence**: Vision-Language Models (VLMs)
 
 {% include_relative _includes/news.md %}
 

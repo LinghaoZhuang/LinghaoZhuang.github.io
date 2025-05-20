@@ -6,7 +6,7 @@ layout: homepage
 
 <h2 style="margin: 60px 0px 10px;">Short Bio</h2>
 
-I am currently a 2th-year Master student at [Xi’an Jiaotong University](https://www.xjtu.edu.cn/), working under the mentorship of Dr. [Zhongyu Li](https://gr.xjtu.edu.cn/en/web/zhongyuli). My research involves medical image analysis, particularly in annotation-efficient learning and segmentation foundation model.
+I am currently a 3rd-year (Junior) Undergraduate student at [Xinjiang University](https://www.xju.edu.cn/), working under the mentorship of Dr. [Zhongyu Li](https://gr.xjtu.edu.cn/en/web/zhongyuli). My research involves medical image analysis, particularly in annotation-efficient learning and segmentation foundation model.
 ## Research Interest:
 - **Medical Image Analysis:**  image segmentation, foundation model
 - **Machine Learning:**  weakly-supervised learning

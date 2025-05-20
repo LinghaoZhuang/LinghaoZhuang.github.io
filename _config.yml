@@ -5,7 +5,7 @@ affiliation: Xinjiang University
 subaffiliation: School of Software Engineering 
 affiliation_link: https://www.xju.edu.cn/
 subaffiliation_link: http://se.xju.edu.cn/
-affiliation_logo: ./assets/img/avatar.jpg
+# affiliation_logo: ./assets/img/avatar.jpg
 email: 20222501513 (at) stu.xju.edu.cn
 # email2: song.chen (at) universite-paris-saclay.fr
 address:  Xinjiang, China

@@ -25,6 +25,9 @@
   <meta property="twitter:image" content="https://linghaozhuang.github.io/images/headshot.jpg">
 
   <title>Linghao Zhuang | 庄凌浩</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="apple.css" type="text/css">
   <link rel="icon" href="images/headshot.jpg">
 </head>
@@ -136,49 +139,64 @@
       <!-- News -->
       <section id="news">
         <h2 class="section-title">News</h2>
-        <div class="news-grid">
+        <div class="news-grid" id="news-grid">
           <div class="news-card">
             <div class="news-date"><time datetime="2026-01">01/2026</time></div>
-            <div>One paper accepted by <b>ICASSP 2026</b>.🎉🎉🎉</div>
+            <div>One paper accepted by <b>ICASSP 2026</b>.</div>
           </div>
           <div class="news-card">
             <div class="news-date"><time datetime="2025-12">12/2025</time></div>
-            <div>One paper accepted by <b>Scientific Data</b>.🎉🎉🎉</div>
+            <div>One paper accepted by <b>Scientific Data</b>.</div>
           </div>
           <div class="news-card">
             <div class="news-date"><time datetime="2025-11">11/2025</time></div>
-            <div>Two papers accepted by <b>AAAI 2026</b>.🎉🎉🎉</div>
+            <div>Two papers accepted by <b>AAAI 2026</b>.</div>
           </div>
           <div class="news-card">
             <div class="news-date"><time datetime="2025-04">04/2025</time></div>
-            <div>One paper accepted by <b>IEEE EMBC 2025</b>.🎉🎉🎉🎉</div>
+            <div>One paper accepted by <b>IEEE EMBC 2025</b>.</div>
           </div>
-          <div class="news-card">
+          <div class="news-card news-hidden">
             <div class="news-date"><time datetime="2024-11">11/2024</time></div>
-            <div>Won <b>Bronze Medal</b> at ACM-ICPC Asia Regional Contest.🥉</div>
+            <div>Won <b>Bronze Medal</b> at ACM-ICPC Asia Regional Contest.</div>
           </div>
-          <div class="news-card">
+          <div class="news-card news-hidden">
             <div class="news-date"><time datetime="2024-11">11/2024</time></div>
-            <div>Won <b>Bronze Medal</b> at CCPC National Regional Contest.🥉</div>
+            <div>Won <b>Bronze Medal</b> at CCPC National Regional Contest.</div>
           </div>
-          <div class="news-card">
+          <div class="news-card news-hidden">
             <div class="news-date"><time datetime="2024-05">05/2024</time></div>
-            <div>Won <b>Gold Medal</b> at CCPC National Invitational Contest.🏅</div>
+            <div>Won <b>Gold Medal</b> at CCPC National Invitational Contest.</div>
           </div>
         </div>
+        <button class="news-toggle" id="news-toggle" aria-expanded="false">
+          <span class="toggle-text">Show more</span>
+          <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
       </section>
 
       <!-- Publications -->
       <section id="publications">
         <h2 class="section-title">Selected Publications</h2>
-        <div class="pub-note">* Equal contribution</div>
+        <div class="pub-header">
+          <div class="pub-note">* Equal contribution</div>
+          <div class="pub-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ccf-a">CCF A</button>
+            <button class="filter-btn" data-filter="ccf-b">CCF B</button>
+            <button class="filter-btn" data-filter="journal">Journal</button>
+            <button class="filter-btn" data-filter="first-author">First Author</button>
+          </div>
+        </div>
 
-        <div class="pub-list">
+        <div class="pub-list" id="pub-list">
 
           <!-- ICASSP 2026 -->
-          <div class="pub-card">
+          <div class="pub-card" data-venue="ccf-b" data-year="2026" data-first="true">
             <div class="pub-image-wrapper">
-              <img src="images/pFedSAM.png" alt="Paper Thumbnail" class="pub-image">
+              <img src="images/pFedSAM.png" alt="pFedSAM paper figure" class="pub-image" loading="lazy">
               <span class="pub-badge">ICASSP 2026</span>
             </div>
             <div class="pub-info">
@@ -196,9 +214,9 @@
           </div>
 
           <!-- Scientific Data -->
-          <div class="pub-card">
+          <div class="pub-card" data-venue="journal" data-year="2025" data-first="true">
             <div class="pub-image-wrapper">
-              <img src="images/Scientific_Data.png" alt="Paper Thumbnail" class="pub-image">
+              <img src="images/Scientific_Data.png" alt="Scientific Data paper figure" class="pub-image" loading="lazy">
               <span class="pub-badge">Scientific Data</span>
             </div>
             <div class="pub-info">
@@ -214,9 +232,9 @@
           </div>
 
           <!-- AAAI 2026 -->
-          <div class="pub-card">
+          <div class="pub-card" data-venue="ccf-a" data-year="2026" data-first="true">
             <div class="pub-image-wrapper">
-              <img src="images/TowardsAffordance-Aware.png" alt="Paper Thumbnail" class="pub-image">
+              <img src="images/TowardsAffordance-Aware.png" alt="Affordance-Aware Grasping paper figure" class="pub-image" loading="lazy">
               <span class="pub-badge">AAAI 2026</span>
             </div>
             <div class="pub-info">
@@ -235,9 +253,9 @@
           </div>
 
           <!-- AAAI 2026 -->
-          <div class="pub-card">
+          <div class="pub-card" data-venue="ccf-a" data-year="2026" data-first="false">
             <div class="pub-image-wrapper">
-              <img src="images/Divide,ConquerandUnite.png" alt="Paper Thumbnail" class="pub-image">
+              <img src="images/Divide,ConquerandUnite.png" alt="Federated Medical Segmentation paper figure" class="pub-image" loading="lazy">
               <span class="pub-badge">AAAI 2026</span>
             </div>
             <div class="pub-info">
@@ -256,9 +274,9 @@
           </div>
 
           <!-- Preprint -->
-          <div class="pub-card">
+          <div class="pub-card" data-venue="preprint" data-year="2025" data-first="true">
             <div class="pub-image-wrapper">
-              <img src="images/High-Fidelity.png" alt="Paper Thumbnail" class="pub-image">
+              <img src="images/High-Fidelity.png" alt="High-Fidelity Simulation paper figure" class="pub-image" loading="lazy">
               <span class="pub-badge">Preprint</span>
             </div>
             <div class="pub-info">
@@ -277,9 +295,9 @@
           </div>
 
           <!-- EMBC 2025 -->
-          <div class="pub-card">
+          <div class="pub-card" data-venue="conference" data-year="2025" data-first="true">
             <div class="pub-image-wrapper">
-              <img src="images/ActiveSSF.png" alt="Paper Thumbnail" class="pub-image">
+              <img src="images/ActiveSSF.png" alt="ActiveSSF paper figure" class="pub-image" loading="lazy">
               <span class="pub-badge">EMBC 2025</span>
             </div>
             <div class="pub-info">
@@ -372,32 +390,66 @@
         <h2 class="section-title">Awards</h2>
         <div class="awards-grid">
           <div class="award-card">
-            <div class="award-icon">🥇</div>
+            <div class="award-icon award-gold">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
             <div class="award-title">Gold Medal 金牌</div>
             <div class="award-sub">CCPC National Invitational 2024 (Changchun)<br>2024 CCPC 全国邀请赛</div>
           </div>
           <div class="award-card">
-            <div class="award-icon">🥈</div>
+            <div class="award-icon award-silver">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
             <div class="award-title">Silver Medal 银牌</div>
             <div class="award-sub">CCPC National Invitational 2024 (Shandong)<br>2024 CCPC 全国邀请赛</div>
           </div>
           <div class="award-card">
-            <div class="award-icon">🥉</div>
+            <div class="award-icon award-bronze">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
             <div class="award-title">Bronze Medal 铜牌</div>
             <div class="award-sub">ACM-ICPC Asia Regional 2024<br>2024 ACM-ICPC 亚洲区域赛</div>
           </div>
           <div class="award-card">
-            <div class="award-icon">🥉</div>
+            <div class="award-icon award-bronze">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
             <div class="award-title">Bronze Medal 铜牌</div>
             <div class="award-sub">CCPC Regional Contest 2024<br>2024 CCPC 全国区域赛</div>
           </div>
           <div class="award-card">
-            <div class="award-icon">🥇</div>
+            <div class="award-icon award-gold">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
             <div class="award-title">Gold Medal 金牌</div>
             <div class="award-sub">ACM-ICPC Xinjiang Provincial 2024<br>2024 ACM-ICPC 新疆省赛</div>
           </div>
           <div class="award-card">
-            <div class="award-icon">🏆</div>
+            <div class="award-icon award-trophy">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                <path d="M4 22h16"></path>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+              </svg>
+            </div>
             <div class="award-title">First Prize 一等奖</div>
             <div class="award-sub">Math Modeling Provincial 2023<br>2023 全国大学生数学建模竞赛</div>
           </div>
@@ -405,7 +457,7 @@
       </section>
 
       <footer class="footer">
-        <p>© 2025 Linghao Zhuang. Built with ❤️.</p>
+        <p>© 2025 Linghao Zhuang</p>
       </footer>
 
       <!-- Back to Top Button -->
@@ -472,6 +524,56 @@
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
+      });
+    });
+
+    // News Toggle Logic
+    const newsToggle = document.getElementById('news-toggle');
+    const newsGrid = document.getElementById('news-grid');
+
+    newsToggle.addEventListener('click', () => {
+      const isExpanded = newsToggle.getAttribute('aria-expanded') === 'true';
+      newsToggle.setAttribute('aria-expanded', !isExpanded);
+      newsGrid.classList.toggle('expanded');
+      newsToggle.querySelector('.toggle-text').textContent = isExpanded ? 'Show more' : 'Show less';
+    });
+
+    // Publications Filter Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const pubCards = document.querySelectorAll('.pub-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        pubCards.forEach(card => {
+          const venue = card.dataset.venue;
+          const isFirst = card.dataset.first === 'true';
+
+          let show = false;
+
+          if (filter === 'all') {
+            show = true;
+          } else if (filter === 'ccf-a') {
+            show = venue === 'ccf-a';
+          } else if (filter === 'ccf-b') {
+            show = venue === 'ccf-b';
+          } else if (filter === 'journal') {
+            show = venue === 'journal';
+          } else if (filter === 'first-author') {
+            show = isFirst;
+          }
+
+          if (show) {
+            card.classList.remove('filtered-out');
+          } else {
+            card.classList.add('filtered-out');
+          }
+        });
       });
     });
   </script>

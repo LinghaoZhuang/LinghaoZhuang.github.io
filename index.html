@@ -7,6 +7,8 @@
   <meta name="keywords" content="Linghao Zhuang, Zhuang Linghao, medical AI, embodied intelligence">
   <meta name="description"
     content="Linghao Zhuang — Undergraduate student at Xinjiang University. Research: medical AI, embodied intelligence, multimodal models.">
+  <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website">
@@ -30,6 +32,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="apple.css" type="text/css">
   <link rel="icon" href="images/headshot.jpg">
+
+  <!-- Prevent FOUC for dark mode -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -141,10 +153,6 @@
         <h2 class="section-title">News</h2>
         <div class="news-grid" id="news-grid">
           <div class="news-card">
-            <div class="news-date"><time datetime="2026-01">01/2026</time></div>
-            <div>One paper accepted by <b>ICASSP 2026</b>.</div>
-          </div>
-          <div class="news-card">
             <div class="news-date"><time datetime="2025-12">12/2025</time></div>
             <div>One paper accepted by <b>Scientific Data</b>.</div>
           </div>
@@ -192,26 +200,6 @@
         </div>
 
         <div class="pub-list" id="pub-list">
-
-          <!-- ICASSP 2026 -->
-          <div class="pub-card" data-venue="ccf-b" data-year="2026" data-first="true">
-            <div class="pub-image-wrapper">
-              <img src="images/pFedSAM.png" alt="pFedSAM paper figure" class="pub-image" loading="lazy">
-              <span class="pub-badge">ICASSP 2026</span>
-            </div>
-            <div class="pub-info">
-              <a href="https://arxiv.org/abs/2509.15638" class="pub-title">pFedSAM: Personalized Federated Learning of
-                Segment Anything Model</a>
-              <div class="pub-authors">
-                Tong Wang*, Xingyue Zhao*, <b>Linghao Zhuang*</b>, Haoyu Zhao, Jiayi Yin, Yuyang He, Gang Yu, Bo Lin
-              </div>
-              <div class="pub-venue">IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), 2026 (CCF B)</div>
-              <div class="pub-actions">
-                <a href="https://arxiv.org/abs/2509.15638" class="action-btn">arXiv</a>
-                <a href="https://arxiv.org/pdf/2509.15638" class="action-btn">PDF</a>
-              </div>
-            </div>
-          </div>
 
           <!-- Scientific Data -->
           <div class="pub-card" data-venue="journal" data-year="2025" data-first="true">
@@ -310,6 +298,26 @@
               <div class="pub-actions">
                 <a href="https://arxiv.org/abs/2502.08200" class="action-btn">arXiv</a>
                 <a href="https://arxiv.org/pdf/2502.08200" class="action-btn">PDF</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preprint: pFedSAM -->
+          <div class="pub-card" data-venue="preprint" data-year="2025" data-first="true">
+            <div class="pub-image-wrapper">
+              <img src="images/pFedSAM.png" alt="pFedSAM paper figure" class="pub-image" loading="lazy">
+              <span class="pub-badge">Preprint</span>
+            </div>
+            <div class="pub-info">
+              <a href="https://arxiv.org/abs/2509.15638" class="pub-title">pFedSAM: Personalized Federated Learning of
+                Segment Anything Model</a>
+              <div class="pub-authors">
+                Tong Wang*, Xingyue Zhao*, <b>Linghao Zhuang*</b>, Haoyu Zhao, Jiayi Yin, Yuyang He, Gang Yu, Bo Lin
+              </div>
+              <div class="pub-venue">arXiv preprint arXiv:2509.15638, 2025</div>
+              <div class="pub-actions">
+                <a href="https://arxiv.org/abs/2509.15638" class="action-btn">arXiv</a>
+                <a href="https://arxiv.org/pdf/2509.15638" class="action-btn">PDF</a>
               </div>
             </div>
           </div>

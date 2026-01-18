@@ -221,6 +221,8 @@ a:hover {
   padding: 10px 0;
   transition: transform 0.4s var(--transition);
   z-index: 100;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .profile-card {
@@ -355,6 +357,7 @@ a:hover {
   flex-direction: column;
   gap: 50px;
   /* Reduced gap between sections */
+  overflow-x: hidden;
 }
 
 section {

@@ -318,25 +318,87 @@
     });
   }
 
-  // Figures decode in the background and reach the GPU one at a time, so none of it interrupts scrolling.
+  // Figures download strictly one at a time, and the one the reader is looking at interrupts whichever is under way,
+  // so on a slow connection it gets all of the bandwidth. They reach the GPU one at a time too. Phones show the same
+  // files inline as the reader gets to them, and nothing is fetched ahead for readers who asked to save data.
   const figs = new Map();
-  function loadFigure(src) {
-    let f = figs.get(src);
-    if (f) return f;
-    f = { src, state: 'loading', tex: null, img: null, aspect: 2 };
-    figs.set(src, f);
+  const figQueue = [];
+  let figActive = null;
+  const prefetchFigures = !narrowMQ.matches && !(navigator.connection && navigator.connection.saveData);
+
+  function startFigure(f) {
+    figActive = f;
+    f.state = 'loading';
     const img = new Image();
+    f.loader = img;
     img.decoding = 'async';
-    img.src = src;
-    const ready = () => {
+    img.src = f.src;
+    const loaded = img.decode ? img.decode() : new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+    loaded.then(() => {
+      if (f.loader !== img) return;
       f.img = img;
       f.aspect = img.naturalWidth / Math.max(1, img.naturalHeight);
       f.state = 'ready';
       markDirty();
-    };
-    const loaded = img.decode ? img.decode() : new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-    loaded.then(ready, () => { f.state = 'error'; });
+    }, () => {
+      if (f.loader !== img) return;
+      if (f.tries++ < 1) { f.state = 'queued'; figQueue.push(f); } else f.state = 'error';
+    }).then(() => {
+      if (f.loader !== img) return;   // interrupted: it went back in the queue, and something else is running
+      f.loader = null;
+      figActive = null;
+      syncFigWaiting();
+      pumpFigures();
+    });
+  }
+  function pumpFigures() {
+    if (figActive) return;
+    while (figQueue.length) {
+      const f = figQueue.shift();
+      if (f.state === 'queued') { startFigure(f); return; }
+    }
+  }
+  function interruptFigure() {
+    const f = figActive;
+    const img = f.loader;
+    f.loader = null;
+    f.state = 'queued';
+    figQueue.unshift(f);
+    figActive = null;
+    img.src = '';
+  }
+  function loadFigure(src, urgent) {
+    let f = figs.get(src);
+    if (!f) {
+      f = { src, state: 'queued', tex: null, img: null, aspect: 2, tries: 0, loader: null };
+      figs.set(src, f);
+      figQueue.push(f);
+    }
+    if (urgent && f.state === 'queued') {
+      figQueue.splice(figQueue.indexOf(f), 1);
+      if (figActive) interruptFigure();
+      startFigure(f);
+    } else {
+      pumpFigures();
+    }
     return f;
+  }
+  // The papers either side of the current one are the likeliest next, so they go to the front of the queue.
+  function promoteNeighbours(li) {
+    if (!prefetchFigures) return;
+    const i = visiblePubs.indexOf(li);
+    [visiblePubs[i - 1], visiblePubs[i + 1]].forEach((n) => {
+      if (!n) return;
+      const f = loadFigure(n.dataset.figure);
+      const k = figQueue.indexOf(f);
+      if (k > 0) { figQueue.splice(k, 1); figQueue.unshift(f); }
+    });
+  }
+  // While the wanted figure is on its way, its number in the HUD pulses.
+  function syncFigWaiting() {
+    if (!ui.label) return;
+    const f = wall.want.kind === 'fig' ? figs.get(wall.want.src) : null;
+    ui.label.classList.toggle('is-loading', !!f && (f.state === 'queued' || f.state === 'loading'));
   }
   function uploadOneFigure() {
     if (!glLive) return;
@@ -354,7 +416,8 @@
   const same = (a, b) => a.kind === b.kind && (a.kind === 'reel' ? a.id === b.id : a.src === b.src);
   function wantSource(src) {
     wall.want = src;
-    if (src.kind === 'fig') loadFigure(src.src);
+    if (src.kind === 'fig') loadFigure(src.src, true);
+    syncFigWaiting();
     markWallDirty();
   }
   function stepWall(dt) {
@@ -373,6 +436,13 @@
     wall.mix = state.motion ? 0 : 1;
     return true;
   }
+  // Is there something to switch to right now? Waiting for a download draws nothing new, so it costs nothing.
+  const canSwitch = () => {
+    if (same(wall.want, wall.cur)) return false;
+    if (wall.want.kind !== 'fig') return true;
+    const f = figs.get(wall.want.src);
+    return !!f && f.state === 'ready';
+  };
   const figWeight = () => {
     const c = wall.cur.kind === 'fig' ? 1 : 0;
     const p = wall.prev.kind === 'fig' ? 1 : 0;
@@ -406,7 +476,7 @@
     if (activePub) activePub.classList.remove('is-active');
     activePub = li;
     li.classList.add('is-active');
-    if (inPubs()) presentPub(li);
+    if (inPubs()) { presentPub(li); promoteNeighbours(li); }
   }
   function pickPubByScroll() {
     if (hoverPub || performance.now() < pickLockUntil || !visiblePubs.length) return;
@@ -452,6 +522,27 @@
   }
   ui.filterBtns.forEach((b) => b.addEventListener('click', () => applyFilter(b.dataset.filter)));
 
+  // Abstracts: each paper gets a button once this script runs. Without it, the abstracts simply stay open.
+  root.classList.add('abs-ready');
+  ui.pubs.forEach((li) => {
+    const abs = $('.pub-abstract', li);
+    const links = $('.pub-links', li);
+    if (!abs || !links) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'abs-btn';
+    btn.textContent = 'Abstract';
+    btn.setAttribute('aria-label', `Abstract: ${li.dataset.short}`);
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', abs.id);
+    btn.addEventListener('click', () => {
+      const open = !li.classList.contains('abs-open');
+      li.classList.toggle('abs-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    links.appendChild(btn);
+  });
+
   function jumpToPub(li) {
     hoverPub = null;
     pickLockUntil = performance.now() + 1300;
@@ -487,9 +578,10 @@
       if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
     });
     if (idx === PUBS_INDEX) {
-      if (!activePub) setActivePub(visiblePubs[0]);
-      if (activePub) presentPub(activePub);
-      visiblePubs.forEach((li) => loadFigure(li.dataset.figure));
+      if (!activePub) activePub = visiblePubs[0];
+      pickPubByScroll();   // the paper in the middle of the screen, not whichever was current last time
+      if (activePub) { activePub.classList.add('is-active'); presentPub(activePub); promoteNeighbours(activePub); }
+      if (prefetchFigures) visiblePubs.forEach((li) => loadFigure(li.dataset.figure));
     } else {
       showReel(SECTION_REEL[id] != null ? SECTION_REEL[id] : state.reel);
     }
@@ -718,7 +810,7 @@
   if (pubSection && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
-        ui.pubs.forEach((li) => loadFigure(li.dataset.figure));
+        if (prefetchFigures) ui.pubs.forEach((li) => loadFigure(li.dataset.figure));
         io.disconnect();
       }
     }, { rootMargin: '150% 0px' });
@@ -816,7 +908,7 @@
 
   function drawTick(now) {
     const motion = state.motion;
-    const wallBusy = wall.mix < 1 || !same(wall.want, wall.cur);
+    const wallBusy = wall.mix < 1 || canSwitch();
     if (!(dirty || motion || wallBusy)) return;
     const v = director.vel;
     const brisk = opening.on || wallBusy || wallPtr.z > 0 || Math.hypot(v[0], v[1], v[2]) > 0.55 || !motion;

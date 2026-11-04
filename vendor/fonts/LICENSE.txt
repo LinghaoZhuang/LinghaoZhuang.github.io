@@ -1,7 +1,11 @@
 Fonts self-hosted so the page does not depend on fonts.googleapis.com. npm sha512 verified 2026-11-04.
 archivo-expanded.woff2: @fontsource-variable/archivo 5.3.0, latin subset, wdth pinned to 125, wght limited to 100-500.
-instrument-serif*.woff2: @fontsource/instrument-serif 5.3.0, latin subset, unmodified.
-ibm-plex-mono-*.woff2: @fontsource/ibm-plex-mono 5.3.0, latin subset, unmodified.
+instrument-serif*.woff2: @fontsource/instrument-serif 5.3.0, latin subset.
+ibm-plex-mono-*.woff2: @fontsource/ibm-plex-mono 5.3.0, latin subset.
+On 2026-11-05 each was split with fontTools into a core file (ASCII plus U+00A0, 00A9, 00B7, 00D7, 2013-2014,
+2018-2019, 201C-201D, 2026) and a *-ext.woff2 file with the rest of its characters; cinema.css loads the latter only
+for text that needs it (unicode-range). Glyphs, layout features and the name table are otherwise unchanged.
+None of these fonts declares a Reserved Font Name.
 
 === Archivo ===
 Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo) Archivo-Italic[wdth,wght].ttf: Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)

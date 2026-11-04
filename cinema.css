@@ -23,10 +23,9 @@
   --gold: #e6d6a4;
   --silver: #d3dde0;
   --bronze: #d6ae93;
-  --cjk: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
-  --display: 'Archivo Expanded', 'Helvetica Neue', Arial, var(--cjk);
-  --serif: 'Instrument Serif', 'Times New Roman', var(--cjk);
-  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, var(--cjk);
+  --display: 'Archivo Expanded', 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Instrument Serif', 'Times New Roman', serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --pad: clamp(18px, 2.4vw, 40px);
   --bar: max(84px, calc((100vh - 100vw / 2.39) / 2));
   --ease: cubic-bezier(.16, 1, .3, 1);
@@ -56,8 +55,6 @@ body {
   overflow-x: hidden;
   overflow-x: clip;
 }
-
-[lang="zh-CN"] { font-family: var(--cjk); font-style: normal; }
 
 a { color: inherit; }
 img, svg { display: block; }
@@ -245,7 +242,6 @@ main { position: relative; }
 }
 .eyebrow { font-family: var(--serif); font-style: italic; font-size: clamp(19px, 1.9vw, 30px); line-height: 1.1; color: var(--ink); }
 .eyebrow span { font-style: normal; margin: 0 .12em; color: var(--ink-2); }
-.hero-cn { font-weight: 300; font-size: clamp(15px, 1.35vw, 21px); letter-spacing: .5em; margin-right: -.5em; color: var(--ink); }
 
 .hero-foot {
   position: absolute; left: var(--pad); right: var(--pad); bottom: 0; z-index: 6;
@@ -341,7 +337,6 @@ main { position: relative; }
   font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; color: var(--ink-2);
 }
 .prose p { margin: 0 0 1.05em; font-family: var(--serif); font-size: clamp(20px, 1.72vw, 27px); line-height: 1.32; color: var(--ink); }
-.prose [lang="zh-CN"] { font-size: .76em; color: var(--ink-2); }
 .prose a { text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: var(--line-2); text-underline-offset: .18em; transition: text-decoration-color .25s var(--ease); }
 .prose a:hover { text-decoration-color: var(--ink); }
 .prose b { font-weight: 400; font-style: italic; }
@@ -494,9 +489,7 @@ main { position: relative; }
 .laurel-art { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--medal); pointer-events: none; }
 .laurel-text { position: relative; }
 .laurel-rank { font-family: var(--serif); font-style: italic; font-size: clamp(19px, 1.6vw, 25px); line-height: 1.05; color: var(--medal); }
-.laurel-rank span { font-size: .7em; margin-left: .25em; }
 .laurel-event { margin: 7px 0 3px; font-size: 12.5px; line-height: 1.34; }
-.laurel-cn { font-size: 11.5px; line-height: 1.45; color: var(--ink-2); word-break: keep-all; }
 .js:not(.calm) .laurel { opacity: 0; transform: translate3d(0, 30px, 0) scale(.96); transition: opacity 1.1s var(--ease) var(--d, 0ms), transform 1.3s var(--ease) var(--d, 0ms); }
 .js:not(.calm) .laurel.is-in { opacity: 1; transform: none; }
 

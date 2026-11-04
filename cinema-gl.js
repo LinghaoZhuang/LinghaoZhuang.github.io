@@ -37,11 +37,6 @@ float fbm3(vec2 p) {
   for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(1.7, 9.2); a *= 0.5; }
   return s / 0.875;
 }
-float ridged(vec2 p) {
-  float s = 0.0, a = 0.5;
-  for (int i = 0; i < 4; i++) { float n = 1.0 - abs(vnoise(p) * 2.0 - 1.0); s += a * n * n; p = p * 2.1 + vec2(3.1, 1.7); a *= 0.5; }
-  return s / 0.9375;
-}
 `;
 
   /* ---------------------------------------------------------------- wall */

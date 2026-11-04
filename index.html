@@ -29,14 +29,20 @@
   <meta property="twitter:image" content="https://linghaozhuang.github.io/images/og-cover.jpg">
   <title>Linghao Zhuang</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/archivo-expanded.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@0f5cdf9764a184c0436f1c8b4ad819b981274a41/vendor/fonts/archivo-expanded.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@0f5cdf9764a184c0436f1c8b4ad819b981274a41/vendor/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@0f5cdf9764a184c0436f1c8b4ad819b981274a41/vendor/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@0f5cdf9764a184c0436f1c8b4ad819b981274a41/vendor/fonts/ibm-plex-mono-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@0f5cdf9764a184c0436f1c8b4ad819b981274a41/vendor/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="cinema.css">
+  <!-- In the head so they start downloading at once; defer still runs them after the page is parsed. -->
+  <script src="cinema-gl.js" defer fetchpriority="high"></script>
+  <script src="cinema.js" defer fetchpriority="high"></script>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <script>
     document.documentElement.classList.add('js');
     // If the scripts never run, never leave the page hidden behind its entrance animations.
-    setTimeout(function () { if (!window.__cinemaBooted) document.documentElement.classList.add('calm', 'title-in', 'meta-in', 'intro-off'); }, 4000);
+    setTimeout(function () { if (!window.__cinemaBooted) document.documentElement.classList.add('calm', 'title-in', 'meta-in', 'intro-off'); }, 2500);
   </script>
 </head>
 
@@ -470,8 +476,6 @@
     </div>
   </aside>
 
-  <script src="cinema-gl.js" defer fetchpriority="high"></script>
-  <script src="cinema.js" defer fetchpriority="high"></script>
 </body>
 
 </html>

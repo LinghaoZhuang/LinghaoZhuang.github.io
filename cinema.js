@@ -7,7 +7,7 @@
  * Nothing in the camera reacts to the mouse or to scroll speed. The renderer lives in cinema-gl.js.
  * The look and feel is inspired by CineShader by Lusion (cineshader.com); all code here is original.
  */
-(() => {
+(async () => {
   'use strict';
 
   window.__cinemaBooted = true;
@@ -45,9 +45,9 @@
     { title: 'Gaussian Field', meta: 'Anisotropic splats, combed by a slow flow' },
     { title: 'Federation', meta: 'Six clients and a server, rippling through each other' },
   ];
-  const REEL_SECONDS = 26;
-  const TRANSITION_SECONDS = 2.2;
-  const WALL_SPEED = 0.55;   // the wall's own clock runs slower than real time
+  const REEL_SECONDS = 18;
+  const TRANSITION_SECONDS = 1.5;
+  const WALL_SPEED = 0.82;   // the wall's own clock runs a little slower than real time
 
   const SECTION_IDS = ['top', 'biography', 'news', 'publications', 'experience', 'awards', 'fin'];
   const PUBS_INDEX = SECTION_IDS.indexOf('publications');
@@ -58,7 +58,7 @@
   const WALL_H = [3.6, 2.025];
   const FIGURE = [-0.6, 3.0, 0, 1];
 
-  const TAKE_SECONDS = 24;   // one slow glide from a viewpoint to the next
+  const TAKE_SECONDS = 16;   // one glide from a viewpoint to the next
 
   // Viewpoints per chapter. Wide layouts use a horizontal fov (hfov) so framing holds at any aspect
   // ratio; narrow ones a vertical fov. Every viewpoint in a chapter keeps the wall clear of its text.
@@ -324,20 +324,24 @@
   // everything falls back to this site's own copy. Code never comes from it. It is pinned to a commit, whose files
   // never change: to publish a changed figure or font through it, move this commit here and in cinema.css and
   // index.html. A file that commit doesn't have simply loads from this site.
-  const CDN = 'https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/';
+  const CDN = 'https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@0f5cdf9764a184c0436f1c8b4ad819b981274a41/';
+  // Each font is split into a core file with the characters this page uses and an extension with the rest of
+  // its Latin characters, which the browser fetches only for text that needs it (unicode-range).
+  const FONT_CORE = 'U+0020-007E, U+00A0, U+00A9, U+00B7, U+00D7, U+2013-2014, U+2018-2019, U+201C-201D, U+2026';
   const FONT_FILES = [
-    ['Archivo Expanded', 'archivo-expanded', 'font-weight: 100 500'],
-    ['Instrument Serif', 'instrument-serif', 'font-weight: 400'],
-    ['Instrument Serif', 'instrument-serif-italic', 'font-weight: 400; font-style: italic'],
-    ['IBM Plex Mono', 'ibm-plex-mono-300', 'font-weight: 300'],
-    ['IBM Plex Mono', 'ibm-plex-mono-400', 'font-weight: 400'],
+    ['Archivo Expanded', 'archivo-expanded', 'font-weight: 100 500', 'U+00A1-00A8, U+00AA-00B6, U+00B8-00D6, U+00D8-00FF, U+0102, U+0131, U+0152-0153, U+02BC, U+02C6, U+02DA, U+02DC, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+2009, U+201A, U+201E, U+2022, U+2032-2033, U+2039-203A, U+2044, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF'],
+    ['Instrument Serif', 'instrument-serif', 'font-weight: 400', 'U+00A1-00A3, U+00A5, U+00A7-00A8, U+00AA-00AB, U+00AE-00B0, U+00B4, U+00B6, U+00B8, U+00BA-00BB, U+00BF-00D6, U+00D8-00FF, U+0102, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0300-0301, U+0303-0304, U+0308, U+201A, U+201E, U+2022, U+2039-203A, U+20AC, U+2122, U+2212'],
+    ['Instrument Serif', 'instrument-serif-italic', 'font-weight: 400; font-style: italic', 'U+00A1-00A3, U+00A5, U+00A7-00A8, U+00AA-00AB, U+00AE-00B0, U+00B4, U+00B6, U+00B8, U+00BA-00BB, U+00BF-00D6, U+00D8-00FF, U+0102, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0300-0301, U+0303-0304, U+0308, U+201A, U+201E, U+2022, U+2039-203A, U+20AC, U+2122, U+2212'],
+    ['IBM Plex Mono', 'ibm-plex-mono-300', 'font-weight: 300', 'U+00A1-00A8, U+00AA-00B6, U+00B8-00D6, U+00D8-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+201A, U+201E, U+2022, U+2032-2033, U+2039-203A, U+2044, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215'],
+    ['IBM Plex Mono', 'ibm-plex-mono-400', 'font-weight: 400', 'U+00A1-00A8, U+00AA-00B6, U+00B8-00D6, U+00D8-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+201A, U+201E, U+2022, U+2032-2033, U+2039-203A, U+2044, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215'],
   ];
   let cdnUp = false;
   function checkCdn() {
     const down = () => {
       // Don't leave the fonts waiting for the CDN to time out: a later @font-face takes over from the earlier one.
       const style = document.createElement('style');
-      style.textContent = FONT_FILES.map(([family, file, rules]) => `@font-face { font-family: '${family}'; src: url(vendor/fonts/${file}.woff2) format('woff2'); ${rules}; font-display: swap; }`).join('\n');
+      const face = (family, file, rules, range) => `@font-face { font-family: '${family}'; src: url(vendor/fonts/${file}.woff2) format('woff2'); ${rules}; font-display: swap; unicode-range: ${range}; }`;
+      style.textContent = FONT_FILES.map(([family, file, rules, ext]) => `${face(family, file, rules, FONT_CORE)}\n${face(family, `${file}-ext`, rules, ext)}`).join('\n');
       document.head.appendChild(style);
     };
     if (!window.fetch || !window.AbortController) return;
@@ -347,8 +351,8 @@
       if (r.type === 'opaqueredirect') return;   // this route redirects images: fonts are fine, figures stay on this site
       if (!r.ok) { down(); return; }
       cdnUp = true;
-      // Inline figures (phones, no WebGL) that haven't loaded yet switch over too.
-      $$('.pub-thumb').forEach((img) => {
+      // Inline figures (phones, no WebGL) and the portrait switch over too, unless they have already loaded.
+      $$('.pub-thumb, .portrait img').forEach((img) => {
         if (img.complete && img.naturalWidth) return;
         const local = img.getAttribute('src');
         img.onerror = () => { img.onerror = null; img.src = local; };
@@ -708,16 +712,18 @@
   const shotsFor = (id) => (narrowMQ.matches ? SHOTS_NARROW : SHOTS_WIDE)[id];
 
   const director = {
-    chapter: 'top', i: 0, t: 0, dur: 1,
+    chapter: 'top', i: 0, t: 0, dur: 1, hold: 0,
     from: null, to: null,
     rail: null,                      // where the current glide says the camera should be
     cam: null, vel: new Array(POSE_N).fill(0),   // the camera, trailing the rail through a critically damped spring
   };
-  function beginGlide(toPose, seconds) {
+  // `hold`: after a long move, a moment for the camera to come to rest before the next take sets off.
+  function beginGlide(toPose, seconds, hold) {
     director.from = director.rail.slice();
     director.to = toPose;
     director.t = 0;
     director.dur = seconds;
+    director.hold = hold || 0;
   }
   function placeCamera(pose) {
     director.rail = pose.slice();
@@ -727,6 +733,7 @@
     director.vel.fill(0);
     director.t = 0;
     director.dur = 0.001;
+    director.hold = 0;
   }
   function directChapter(id) {
     director.chapter = id;
@@ -735,17 +742,17 @@
     const to = poseOf(shotsFor(id)[0]);
     if (!state.motion) { placeCamera(to); markDirty(); return; }
     const d = Math.hypot(to[0] - director.rail[0], to[1] - director.rail[1], to[2] - director.rail[2]);
-    beginGlide(to, clamp(4.5 + d * 0.22, 5, 10));   // re-framing takes its time, never a snap
+    beginGlide(to, clamp(3 + d * 0.15, 3.3, 6.6), 1.2);   // re-framing is unhurried, never a snap
   }
   function resetFraming() {
     if (!director.rail) return;
     const list = shotsFor(director.chapter);
     director.i %= list.length;
-    beginGlide(poseOf(list[director.i]), 2);
+    beginGlide(poseOf(list[director.i]), 2, 0.6);
   }
   function stepDirector(dt) {
     director.t += dt;
-    if (director.t >= director.dur) {
+    if (director.t >= director.dur + director.hold) {
       const list = shotsFor(director.chapter);
       if (list.length > 1) {
         director.i = (director.i + 1) % list.length;
@@ -753,7 +760,7 @@
       }
     }
     const e = easeSine(clamp01(director.t / director.dur));
-    const w = 1.6;   // follow rate of the spring
+    const w = 2.4;   // follow rate of the spring
     const decay = Math.exp(-w * dt);
     for (let k = 0; k < POSE_N; k++) {
       director.rail[k] = lerp(director.from[k], director.to[k], e);
@@ -773,7 +780,7 @@
 
   /* ============================================================== opening */
 
-  const opening = { on: false, t: 0, rate: 1, dur: 6.4, titleAt: 3.0, metaAt: 4.6, powerFrom: 1.1, powerDur: 2.2 };
+  const opening = { on: false, t: 0, rate: 1, dur: 4.2, titleAt: 1.8, metaAt: 2.8, powerFrom: 0.7, powerDur: 1.4 };
   const addTitle = () => root.classList.add('title-in');
   const addMeta = () => root.classList.add('meta-in');
   const skipEvents = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
@@ -792,11 +799,11 @@
     const seen = store.getSession('lz-opened') === '1';
     opening.on = true;
     opening.rate = 1;
-    opening.t = seen ? 2.8 : 0;
+    opening.t = seen ? 1.7 : 0;
     root.classList.add('is-opening');
     if (seen) root.classList.add('no-card');
     placeCamera(poseOf(narrowMQ.matches ? OPEN_SHOT.narrow : OPEN_SHOT.wide));
-    beginGlide(poseOf(shotsFor(director.chapter)[0]), seen ? 5 : 9);
+    beginGlide(poseOf(shotsFor(director.chapter)[0]), seen ? 3.2 : 5.5, 1.2);
     skipEvents.forEach((n) => addEventListener(n, skipOpening, { passive: true }));
   }
   function stepOpening(dt) {
@@ -814,6 +821,11 @@
 
   const finishIntro = () => root.classList.add('intro-off');
 
+  // A visitor who has already waited on a slow connection gets the page at once: no black screen and no opening.
+  // The scene fades in behind the text when it is ready.
+  const lateStart = performance.now() > 3000;
+  if (lateStart) { addTitle(); addMeta(); finishIntro(); }
+
   /* ================================================================= boot GL */
 
   const canvas = $('#scene');
@@ -828,6 +840,10 @@
     finishIntro();
     measure();
   }
+
+  // After a slow load the page is already on show: let the browser paint it before compiling the shaders, which
+  // can hold up the page on browsers that cannot compile in the background.
+  if (lateStart) await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
   try {
     renderer = canvas && window.CinemaGL ? window.CinemaGL.createRenderer(canvas, { wallWidth: lowPower ? 800 : 1280 }) : null;
@@ -849,7 +865,7 @@
     addTitle();
     addMeta();
     finishIntro();
-  }, 2800);
+  }, 2200);
 
   canvas.addEventListener('webglcontextlost', (e) => {
     e.preventDefault();
@@ -872,10 +888,10 @@
 
   /* --------------------------------------------------------- frame budget */
 
-  // A steady, film-like cadence: a homepage has no business running the GPU flat out. The camera is so slow
-  // during a take that 20 frames a second looks the same as 60; anything quicker gets 30 (24 on phones).
+  // A steady, film-like cadence: a homepage has no business running the GPU flat out. During a take the camera
+  // moves slowly enough for 24 frames a second (20 on phones); anything quicker gets 30 (24 on phones).
   const FRAME_MS = 1000 / (lowPower ? 24 : 30);
-  const DWELL_MS = 1000 / 20;
+  const DWELL_MS = 1000 / (lowPower ? 20 : 24);
   const GPU_BUDGET_MS = 24;   // leave the GPU room to composite the page and keep scrolling smooth
 
   // Resolution only ever steps down, and only after sustained overload: it never oscillates.
@@ -964,7 +980,7 @@
     const wallBusy = wall.mix < 1 || canSwitch();
     if (!(dirty || motion || wallBusy)) return;
     const v = director.vel;
-    const brisk = opening.on || wallBusy || wallPtr.z > 0 || Math.hypot(v[0], v[1], v[2]) > 0.55 || !motion;
+    const brisk = opening.on || wallBusy || wallPtr.z > 0 || Math.hypot(v[0], v[1], v[2]) > 0.8 || !motion;
     if (now - lastRender < (brisk ? frameMs : DWELL_MS) - 3) return;
     const gap = now - lastRender;
     if (lastRender && gap < 250) frameEma = lerp(frameEma, gap, 0.06);
@@ -1023,7 +1039,9 @@
 
     const fwt = figWeight();
     const swelling = wallPtr.z > 0;
-    const wallDue = animatedWall && (swelling || wallTick++ % 2 === 0);
+    const lean = tier >= 2 || lowPower;
+    // The picture on the wall is redrawn every frame, or every other frame on phones and struggling GPUs.
+    const wallDue = animatedWall && (swelling || !lean || wallTick++ % 2 === 0);
     if (wallDirty || wallDue || transitioning || power < 1 || !renderedOnce) {
       wallDirty = false;
       const fc = wall.cur.kind === 'fig' ? figs.get(wall.cur.src) : null;
@@ -1041,7 +1059,6 @@
     }
 
     frames++;
-    const lean = tier >= 2 || lowPower;
     renderer.drawFrame({
       time,
       pos, tgt, fov, roll: 0,
@@ -1077,7 +1094,7 @@
     placeCamera(poseOf(shotsFor(director.chapter)[0]));
 
     // The full opening only plays from the top of the page, with motion on, and when the still has not taken over.
-    const canOpen = state.motion && !waitedTooLong && window.scrollY < 8 && !location.hash && !params.has('noopen');
+    const canOpen = state.motion && !waitedTooLong && !lateStart && window.scrollY < 8 && !location.hash && !params.has('noopen');
     if (canOpen) startOpening();
     else { addTitle(); addMeta(); }
 
@@ -1111,7 +1128,7 @@
         return {
           scale, tier, w: canvas.width, h: canvas.height, frameEma, gpuEma, frames, renderedOnce, opening: opening.on, openT: opening.t,
           section: SECTION_IDS[state.section], cur: wall.cur, want: wall.want, mix: wall.mix,
-          wantReady: !f || f.state === 'ready', cdnUp, swell: wallPtr.z, gpuMs: renderer.gpuMs(), lean: tier >= 2 || lowPower,
+          wantReady: !f || f.state === 'ready', cdnUp, late: lateStart, swell: wallPtr.z, gpuMs: renderer.gpuMs(), lean: tier >= 2 || lowPower,
         };
       },
     };

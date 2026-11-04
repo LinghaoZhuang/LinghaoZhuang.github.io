@@ -31,7 +31,7 @@
   <link rel="preload" href="vendor/fonts/archivo-expanded.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="vendor/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="cinema.css">
-  <link rel="icon" href="images/headshot.jpg">
+  <link rel="icon" type="image/png" href="images/favicon.png">
   <script>
     document.documentElement.classList.add('js');
     // If the scripts never run, never leave the page hidden behind its entrance animations.
@@ -104,7 +104,7 @@
       <div class="ch-body">
         <div class="about">
           <figure class="portrait" data-reveal>
-            <img src="images/portrait.webp" alt="Portrait of Linghao Zhuang" width="480" height="600" loading="lazy" decoding="async">
+            <img src="images/portrait.webp" alt="Portrait of Linghao Zhuang" width="320" height="400" loading="lazy" decoding="async">
             <figcaption><span>Linghao Zhuang</span></figcaption>
           </figure>
           <div class="prose">
@@ -211,7 +211,7 @@
           </div>
           <div class="pub-abstract" id="abs-shift-dependent-asymmetry"><div><p>Low-Rank Adaptation (LoRA) enables efficient federated fine-tuning of segmentation foundation models for medical imaging. However, most federated LoRA methods adopt a uniform aggregation rule, which breaks under the encoder-decoder asymmetry in medical segmentation: the encoder is dominated by appearance shifts, while the decoder is dominated by supervision variations. This mismatch entangles shared anatomy with site-specific biases and harms generalization. To address this, we propose Inverse Asymmetric Tuning (IAT). IAT aligns adaptation with heterogeneity sources by personalizing module-specific components in the encoder to absorb appearance shifts and in the decoder to accommodate site-dependent supervision, while retaining a shared pathway for transferable consensus. However, structural separation alone is insufficient under LoRA's bilinear parameterization, where multiplicative coupling can still cause site-specific updates to leak into the shared direction. We therefore introduce a Subspace Orthogonality Regularizer that penalizes shared-local collinearity in the effective update space, mitigating leakage without extra communication. Experiments show consistent improvements over strong federated LoRA and parameter-efficient FL baselines.</p></div></div>
           <img class="pub-thumb" src="images/figures/shift-dependent-asymmetry.webp" alt="Shift-Dependent Asymmetry paper figure"
-            width="1600" height="712" loading="lazy" decoding="async">
+            width="1152" height="513" loading="lazy" decoding="async">
         </li>
 
         <!-- ECCV 2026 -->
@@ -229,7 +229,7 @@
           </div>
           <div class="pub-abstract" id="abs-articulat3d"><div><p>Building high-fidelity digital twins of articulated objects from visual data remains a central challenge. Existing approaches depend on multi-view captures of the object in discrete, static states, which severely constrains their real-world scalability. In this paper, we introduce Articulat3D, a novel framework that constructs such digital twins from casually captured monocular videos by jointly enforcing explicit 3D geometric and motion constraints. We first propose Motion Prior-Driven Initialization, which leverages 3D point tracks to exploit the low-dimensional structure of articulated motion. By modeling scene dynamics with a compact set of motion bases, we facilitate soft decomposition of the scene into multiple rigidly moving groups. Building on this initialization, we introduce Geometric and Motion Constraints Refinement, which enforces physically plausible articulation through learnable kinematic primitives parameterized by a joint axis, a pivot point, and per-frame motion scalars, yielding reconstructions that are both geometrically accurate and temporally coherent. Extensive experiments demonstrate that Articulat3D achieves state-of-the-art performance on synthetic benchmarks and real-world casually captured monocular videos, significantly advancing the feasibility of digital twin creation under uncontrolled real-world conditions. Our project page is available at <a href="https://maxwell-zhao.github.io/Articulat3D/" target="_blank" rel="noopener">https://maxwell-zhao.github.io/Articulat3D/</a>.</p></div></div>
           <img class="pub-thumb" src="images/figures/articulat3d.webp" alt="Articulat3D paper figure"
-            width="1506" height="984" loading="lazy" decoding="async">
+            width="1152" height="753" loading="lazy" decoding="async">
         </li>
 
         <!-- ICASSP 2026 -->
@@ -247,7 +247,7 @@
           </div>
           <div class="pub-abstract" id="abs-pfedsam"><div><p>Medical image segmentation is crucial for computer-aided diagnosis, yet privacy constraints hinder data sharing across institutions. Federated learning addresses this limitation, but existing approaches often rely on lightweight architectures that struggle with complex, heterogeneous data. Recently, the Segment Anything Model (SAM) has shown outstanding segmentation capabilities; however, its massive encoder poses significant challenges in federated settings. In this work, we present the first personalized federated SAM framework tailored for heterogeneous data scenarios in medical image segmentation. Our framework integrates two key innovations: (1) a personalized strategy that aggregates only the global parameters to capture cross-client commonalities while retaining the designed L-MoE (Localized Mixture-of-Experts) component to preserve domain-specific features; and (2) a decoupled global-local fine-tuning mechanism that leverages a teacher-student paradigm via knowledge distillation to bridge the gap between the global shared model and the personalized local models, thereby mitigating overgeneralization. Extensive experiments on two public datasets validate that our approach significantly improves segmentation performance, achieves robust cross-domain adaptation, and reduces communication overhead.</p></div></div>
           <img class="pub-thumb" src="images/figures/pfedsam.webp" alt="pFedSAM paper figure"
-            width="1600" height="686" loading="lazy" decoding="async">
+            width="1152" height="494" loading="lazy" decoding="async">
         </li>
 
         <!-- Scientific Data -->
@@ -264,7 +264,7 @@
           </div>
           <div class="pub-abstract" id="abs-scientific-data"><div><p>Precise classification of megakaryocyte subtypes in bone marrow examination is crucial for the diagnosis and research of various hematological disorders, including Myelodysplastic Syndromes (MDS) and other platelet-production related diseases. While deep learning (DL) has demonstrated remarkable success in medical image classification, its application to megakaryocyte classification has been hindered by the scarcity of high-quality, openly licensed datasets. Therefore, we present MK-11, a dataset comprising 7,204 Wright-Giemsa stained single-cell images across 11 clinically relevant megakaryocyte subtypes. All images were annotated by two experienced hematopathologists with consensus review to ensure annotation quality, following standardized diagnostic criteria. Several state-of-the-art neural networks, including convolutional and transformer-based models, were evaluated on this benchmark, establishing strong baseline performance for megakaryocyte classification. To ensure reproducibility, we provide standardized five-fold cross-validation partitions along with all original images, annotations, partitioning schemes, and evaluation scripts under open licenses. In conclusion, this work presents the first public megakaryocyte subtype classification dataset for automatic morphological assessment development and evaluation, serving as a benchmark for future research.</p></div></div>
           <img class="pub-thumb" src="images/figures/scientific-data.webp" alt="Scientific Data paper figure"
-            width="1600" height="857" loading="lazy" decoding="async">
+            width="1152" height="617" loading="lazy" decoding="async">
         </li>
 
         <!-- AAAI 2026 -->
@@ -282,7 +282,7 @@
           </div>
           <div class="pub-abstract" id="abs-affordance-aware"><div><p>A dexterous hand capable of generalizable grasping objects is fundamental for the development of general-purpose embodied AI. However, previous methods focus narrowly on low-level grasp stability metrics, neglecting affordance-aware positioning and human-like poses which are crucial for downstream manipulation. To address these limitations, we propose AffordDex, a novel framework with two-stage training that learns a universal grasping policy with an inherent understanding of both motion priors and object affordances. In the first stage, a trajectory imitator is pre-trained on a large corpus of human hand motions to instill a strong prior for natural movement. In the second stage, a residual module is trained to adapt these general human-like motions to specific object instances. This refinement is critically guided by two components: our Negative Affordance-aware Segmentation (NAA) module, which identifies functionally inappropriate contact regions, and a privileged teacher-student distillation process that ensures the final vision-based policy is highly successful. Extensive experiments demonstrate that AffordDex not only achieves universal dexterous grasping but also remains remarkably human-like in posture and functionally appropriate in contact location. As a result, AffordDex significantly outperforms state-of-the-art baselines across seen objects, unseen instances, and even entirely novel categories.</p></div></div>
           <img class="pub-thumb" src="images/figures/affordance-aware.webp" alt="Affordance-Aware Grasping paper figure"
-            width="1348" height="696" loading="lazy" decoding="async">
+            width="1152" height="595" loading="lazy" decoding="async">
         </li>
 
         <!-- AAAI 2026 -->
@@ -300,7 +300,7 @@
           </div>
           <div class="pub-abstract" id="abs-divide-conquer-unite"><div><p>Federated learning enables multiple medical institutions to train a global model without sharing data, yet feature heterogeneity from diverse scanners or protocols remains a major challenge. Many existing works attempt to address this issue by leveraging model representations (e.g., mean feature vectors) to correct local training; however, they often face two key limitations: 1) Incomplete Contextual Representation Learning: Current approaches primarily focus on final-layer features, overlooking critical multi-level cues and thus diluting essential context for accurate segmentation. 2) Layerwise Style Bias Accumulation: Although utilizing representations can partially align global features, these methods neglect domain-specific biases within intermediate layers, allowing style discrepancies to build up and reduce model robustness. To address these challenges, we propose FedBCS to bridge feature representation gaps via domain-invariant contextual prototypes alignment. Specifically, we introduce a frequency-domain adaptive style recalibration into prototype construction that not only decouples content-style representations but also learns optimal style parameters, enabling more robust domain-invariant prototypes. Furthermore, we design a context-aware dual-level prototype alignment method that extracts domain-invariant prototypes from different layers of both encoder and decoder and fuses them with contextual information for finer-grained representation alignment. Extensive experiments on two public datasets demonstrate that our method exhibits remarkable performance.</p></div></div>
           <img class="pub-thumb" src="images/figures/divide-conquer-unite.webp" alt="Federated Medical Segmentation paper figure"
-            width="1531" height="938" loading="lazy" decoding="async">
+            width="1152" height="706" loading="lazy" decoding="async">
         </li>
 
         <!-- IEEE RA-L -->
@@ -318,7 +318,7 @@
           </div>
           <div class="pub-abstract" id="abs-high-fidelity"><div><p>The scalability of robotic learning is fundamentally bottlenecked by the significant cost and labor of real-world data collection. While simulated data offers a scalable alternative, it often fails to generalize to the real world due to significant gaps in visual appearance, physical properties, and object interactions. To address this, we propose RoboSimGS, a novel Real2Sim2Real framework that converts multi-view real-world images into scalable, high-fidelity, and physically interactive simulation environments for robotic manipulation. Our approach reconstructs scenes using a hybrid representation: 3D Gaussian Splatting (3DGS) captures the photorealistic appearance of the environment, while mesh primitives for interactive objects ensure accurate physics simulation. Crucially, we pioneer the use of a Multi-modal Large Language Model (MLLM) to automate the creation of physically plausible, articulated assets. The MLLM analyzes visual data to infer not only physical properties (e.g., density, stiffness) but also complex kinematic structures (e.g., hinges, sliding rails) of objects. We demonstrate that policies trained entirely on data generated by RoboSimGS achieve successful zero-shot sim-to-real transfer across a diverse set of real-world manipulation tasks. Furthermore, data from RoboSimGS significantly enhances the performance and generalization capabilities of SOTA methods. Our results validate RoboSimGS as a powerful and scalable solution for bridging the sim-to-real gap.</p></div></div>
           <img class="pub-thumb" src="images/figures/high-fidelity.webp" alt="High-Fidelity Simulation paper figure"
-            width="1219" height="753" loading="lazy" decoding="async">
+            width="1152" height="712" loading="lazy" decoding="async">
         </li>
 
         <!-- EMBC 2025 -->
@@ -335,7 +335,7 @@
           </div>
           <div class="pub-abstract" id="abs-activessf"><div><p>Precise classification of megakaryocytes is crucial for diagnosing myelodysplastic syndromes. Although self-supervised learning has shown promise in medical image analysis, its application to classifying megakaryocytes in stained slides faces three main challenges: (1) pervasive background noise that obscures cellular details, (2) a long-tailed distribution that limits data for rare subtypes, and (3) complex morphological variations leading to high intra-class variability. To address these issues, we propose the ActiveSSF framework, which integrates active learning with self-supervised pretraining. Specifically, our approach employs Gaussian filtering combined with K-means clustering and HSV analysis (augmented by clinical prior knowledge) for accurate region-of-interest extraction; an adaptive sample selection mechanism that dynamically adjusts similarity thresholds to mitigate class imbalance; and prototype clustering on labeled samples to overcome morphological complexity. Experimental results on clinical megakaryocyte datasets demonstrate that ActiveSSF not only achieves state-of-the-art performance but also significantly improves recognition accuracy for rare subtypes. Moreover, the integration of these advanced techniques further underscores the practical potential of ActiveSSF in clinical settings.</p></div></div>
           <img class="pub-thumb" src="images/figures/activessf.webp" alt="ActiveSSF paper figure"
-            width="1425" height="740" loading="lazy" decoding="async">
+            width="1152" height="598" loading="lazy" decoding="async">
         </li>
 
       </ol>

@@ -7,11 +7,12 @@
  * use mix-blend-mode against the live scene.
  */
 
-@font-face { font-family: 'Archivo Expanded'; src: url(vendor/fonts/archivo-expanded.woff2) format('woff2'); font-weight: 100 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Instrument Serif'; src: url(vendor/fonts/instrument-serif.woff2) format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Instrument Serif'; src: url(vendor/fonts/instrument-serif-italic.woff2) format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: 'IBM Plex Mono'; src: url(vendor/fonts/ibm-plex-mono-300.woff2) format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
-@font-face { font-family: 'IBM Plex Mono'; src: url(vendor/fonts/ibm-plex-mono-400.woff2) format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+/* Fonts come from jsDelivr where it is reachable (see the note on media in cinema.js), else from this site. */
+@font-face { font-family: 'Archivo Expanded'; src: url(https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/archivo-expanded.woff2) format('woff2'), url(vendor/fonts/archivo-expanded.woff2) format('woff2'); font-weight: 100 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Instrument Serif'; src: url(https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/instrument-serif.woff2) format('woff2'), url(vendor/fonts/instrument-serif.woff2) format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Instrument Serif'; src: url(https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/instrument-serif-italic.woff2) format('woff2'), url(vendor/fonts/instrument-serif-italic.woff2) format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url(https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/ibm-plex-mono-300.woff2) format('woff2'), url(vendor/fonts/ibm-plex-mono-300.woff2) format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url(https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/ibm-plex-mono-400.woff2) format('woff2'), url(vendor/fonts/ibm-plex-mono-400.woff2) format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 
 :root {
   --bg: #020405;

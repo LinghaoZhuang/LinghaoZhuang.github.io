@@ -28,8 +28,9 @@
     content="Research student at CAMS/PUMC (Peking Union Medical College). Research: medical AI, embodied intelligence, multimodal models.">
   <meta property="twitter:image" content="https://linghaozhuang.github.io/images/og-cover.jpg">
   <title>Linghao Zhuang</title>
-  <link rel="preload" href="vendor/fonts/archivo-expanded.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="vendor/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/archivo-expanded.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/vendor/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="cinema.css">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <script>
@@ -469,8 +470,8 @@
     </div>
   </aside>
 
-  <script src="cinema-gl.js" defer></script>
-  <script src="cinema.js" defer></script>
+  <script src="cinema-gl.js" defer fetchpriority="high"></script>
+  <script src="cinema.js" defer fetchpriority="high"></script>
 </body>
 
 </html>

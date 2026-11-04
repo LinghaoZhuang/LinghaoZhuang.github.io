@@ -318,6 +318,46 @@
     });
   }
 
+  // Figures and fonts come from jsDelivr, a free public CDN for open-source repositories, because GitHub Pages can be
+  // very slow from mainland China at busy times. jsDelivr is steadier there but not reachable from every network, and
+  // some of its routes redirect images to raw.githubusercontent.com, which is no better. So a quick check decides, and
+  // everything falls back to this site's own copy. Code never comes from it. It is pinned to a commit, whose files
+  // never change: to publish a changed figure or font through it, move this commit here and in cinema.css and
+  // index.html. A file that commit doesn't have simply loads from this site.
+  const CDN = 'https://cdn.jsdelivr.net/gh/LinghaoZhuang/LinghaoZhuang.github.io@583e988ee648aa5830bb293f07369012641967bd/';
+  const FONT_FILES = [
+    ['Archivo Expanded', 'archivo-expanded', 'font-weight: 100 500'],
+    ['Instrument Serif', 'instrument-serif', 'font-weight: 400'],
+    ['Instrument Serif', 'instrument-serif-italic', 'font-weight: 400; font-style: italic'],
+    ['IBM Plex Mono', 'ibm-plex-mono-300', 'font-weight: 300'],
+    ['IBM Plex Mono', 'ibm-plex-mono-400', 'font-weight: 400'],
+  ];
+  let cdnUp = false;
+  function checkCdn() {
+    const down = () => {
+      // Don't leave the fonts waiting for the CDN to time out: a later @font-face takes over from the earlier one.
+      const style = document.createElement('style');
+      style.textContent = FONT_FILES.map(([family, file, rules]) => `@font-face { font-family: '${family}'; src: url(vendor/fonts/${file}.woff2) format('woff2'); ${rules}; font-display: swap; }`).join('\n');
+      document.head.appendChild(style);
+    };
+    if (!window.fetch || !window.AbortController) return;
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 3500);
+    fetch(`${CDN}images/favicon.png`, { method: 'HEAD', mode: 'cors', redirect: 'manual', signal: ctl.signal }).then((r) => {
+      if (r.type === 'opaqueredirect') return;   // this route redirects images: fonts are fine, figures stay on this site
+      if (!r.ok) { down(); return; }
+      cdnUp = true;
+      // Inline figures (phones, no WebGL) that haven't loaded yet switch over too.
+      $$('.pub-thumb').forEach((img) => {
+        if (img.complete && img.naturalWidth) return;
+        const local = img.getAttribute('src');
+        img.onerror = () => { img.onerror = null; img.src = local; };
+        img.src = CDN + local;
+      });
+    }, down).finally(() => clearTimeout(timer));
+  }
+  checkCdn();
+
   // Figures download strictly one at a time, and the one the reader is looking at interrupts whichever is under way,
   // so on a slow connection it gets all of the bandwidth. They reach the GPU one at a time too. Phones show the same
   // files inline as the reader gets to them, and nothing is fetched ahead for readers who asked to save data.
@@ -329,20 +369,33 @@
   function startFigure(f) {
     figActive = f;
     f.state = 'loading';
+    const viaCdn = cdnUp && !f.noCdn;
     const img = new Image();
     f.loader = img;
     img.decoding = 'async';
-    img.src = f.src;
+    if (viaCdn) img.crossOrigin = 'anonymous';   // the wall is a WebGL texture, which needs CORS from another host
+    img.src = viaCdn ? CDN + f.src : f.src;
+    // The CDN usually takes a second or two. If it stalls, stop waiting and use this site's copy.
+    const stall = viaCdn ? setTimeout(() => {
+      if (f.loader !== img) return;
+      f.noCdn = true;
+      interruptFigure();
+      pumpFigures();
+    }, 9000) : 0;
     const loaded = img.decode ? img.decode() : new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
     loaded.then(() => {
+      clearTimeout(stall);
       if (f.loader !== img) return;
       f.img = img;
       f.aspect = img.naturalWidth / Math.max(1, img.naturalHeight);
       f.state = 'ready';
       markDirty();
     }, () => {
+      clearTimeout(stall);
       if (f.loader !== img) return;
-      if (f.tries++ < 1) { f.state = 'queued'; figQueue.push(f); } else f.state = 'error';
+      if (viaCdn) { f.noCdn = true; f.state = 'queued'; figQueue.unshift(f); }
+      else if (f.tries++ < 1) { f.state = 'queued'; figQueue.push(f); }
+      else f.state = 'error';
     }).then(() => {
       if (f.loader !== img) return;   // interrupted: it went back in the queue, and something else is running
       f.loader = null;
@@ -370,7 +423,7 @@
   function loadFigure(src, urgent) {
     let f = figs.get(src);
     if (!f) {
-      f = { src, state: 'queued', tex: null, img: null, aspect: 2, tries: 0, loader: null };
+      f = { src, state: 'queued', tex: null, img: null, aspect: 2, tries: 0, loader: null, noCdn: false };
       figs.set(src, f);
       figQueue.push(f);
     }
@@ -1058,7 +1111,7 @@
         return {
           scale, tier, w: canvas.width, h: canvas.height, frameEma, gpuEma, frames, renderedOnce, opening: opening.on, openT: opening.t,
           section: SECTION_IDS[state.section], cur: wall.cur, want: wall.want, mix: wall.mix,
-          wantReady: !f || f.state === 'ready', swell: wallPtr.z, gpuMs: renderer.gpuMs(), lean: tier >= 2 || lowPower,
+          wantReady: !f || f.state === 'ready', cdnUp, swell: wallPtr.z, gpuMs: renderer.gpuMs(), lean: tier >= 2 || lowPower,
         };
       },
     };
